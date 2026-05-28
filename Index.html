@@ -1,1 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Da Semente ao Prato - Jornada do Milho</title>
+    <style>
+        /* Estilização Geral */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f9f4; color: #333; padding: 20px; }
+        header { text-align: center; margin-bottom: 30px; background-color: #2e7d32; color: white; padding: 30px; border-radius: 10px; }
+        h1 { margin-bottom: 10px; }
 
+        /* Navegação por Abas (Linha do Tempo) */
+        .timeline-nav { display: flex; justify-content: space-around; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .tab-btn { background: #e0e0e0; border: none; padding: 12px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .tab-btn.active { background: #81c784; color: #1b5e20; transform: scale(1.05); }
+
+        /* Conteúdo das Etapas */
+        .step-content { display: none; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        .step-content.active { display: block; animation: fadeIn 0.5s ease; }AGRINHO
+        .step-img { font-size: 80px; margin: 20px 0; display: block; }
+
+        /* Elementos Interativos (Botões de Curiosidade) */
+        .interactive-btn { background: #ffb300; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; margin-top: 15px; transition: 0.2s; }
+        .interactive-btn:hover { background: #ffa000; transform: translateY(-2px); }
+
+        /* Janela Pop-up (Modal) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 10; }
+        .modal-content { background: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #666; }
+        .close-btn:hover { color: #000; }
+
+        /* Animação simples */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌽 Da Semente ao Prato</h1>
+        <p>Descubra a jornada sustentável do milho, do campo até a sua mesa!</p>
+    </header>
+
+    <!-- Linha do Tempo (Abas) -->
+    <nav class="timeline-nav">
+        <button class="tab-btn active" onclick="openStep(event, 'etapa1')">1. O Plantio</button>
+        <button class="tab-btn" onclick="openStep(event, 'etapa2')">2. O Cuidado</button>
+        <button class="tab-btn" onclick="openStep(event, 'etapa3')">3. A Colheita</button>
+        <button class="tab-btn" onclick="openStep(event, 'etapa4')">4. O Consumo</button>
+    </nav>
+
+    <!-- Conteúdos de cada Etapa -->
+    <section id="etapa1" class="step-content active">
+        <h2>Etapa 1: Preparo do Solo e Plantio</h2>
+        <span class="step-img">🌱</span>
+        <p>Tudo começa com a escolha de sementes saudáveis e o plantio direto na palha, técnica sustentável que protege o solo contra a erosão e mantém a umidade da terra.</p>
+        <button class="interactive-btn" onclick="showPopup('Curiosidade do Campo', 'Você sabia? O plantio direto evita que o trator passe muitas vezes na terra, economizando combustível e reduzindo a emissão de CO₂ na atmosfera!')">Clique no Trator 🚜</button>
+    </section>
+
+    <section id="etapa2" class="step-content">
+        <h2>Etapa 2: Manejo Orgânico e Sustentável</h2>
+        <span class="step-img">🌧️</span>
+        <p>O milho cresce forte usando tecnologia de ponta. Em vez de venenos químicos agressivos, o produtor usa o manejo biológico, usando insetos do bem para combater as pragas.</p>
+        <button class="interactive-btn" onclick="showPopup('Segredo da Água', 'Os produtores modernos usam sensores conectados à internet para saber a quantidade exata de água que a planta precisa. Assim, nenhuma gota de chuva ou irrigação é desperdiçada!')">Clique na Nuvem ☁️</button>
+    </section>
+
+    <section id="etapa3" class="step-content">
+        <h2>Etapa 3: Colheita e Agroindústria</h2>
+        <span class="step-img">🚜</span>
+        <p>Na hora certa, colheitadeiras modernas recolhem os grãos. O milho vai para as cooperativas e indústrias locais, gerando empregos e movimentando a economia da nossa região.</p>
+        <button class="interactive-btn" onclick="showPopup('Da Fábrica para a Região', 'As indústrias modernas usam até o bagaço e o sabugo do milho para gerar biomassa (energia limpa) para as próprias máquinas funcionarem!')">Clique na Indústria 🏭</button>
+    </section>
+
+    <section id="etapa4" class="step-content">
+        <h2>Etapa 4: Alimento na Mesa</h2>
+        <span class="step-img">🍽️</span>
+        <p>O milho se transforma em bolo, pamonha, pipoca, floco de milho e alimenta animais. Graças ao trabalho do campo, a cidade tem comida saudável e de qualidade todos os dias.</p>
+        <button class="interactive-btn" onclick="showPopup('Quiz Rápido!', 'Qual desses pratos típicos NÃO é feito de milho? <br><br> 🌽 A) Pamonha <br> 🌽 B) Polenta <br> 🍫 C) Chocolate <br><br> <i>Resposta certa: C! O milho está em quase tudo, mas o chocolate vem do cacau!</i>')">Abrir Quiz 📝</button>
+    </section>
+
+    <!-- Estrutura do Pop-up (Modal) -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closePopup()">&times;</span>
+            <h3 id="modalTitle" style="color: #2e7d32; margin-bottom: 15px;">Título</h3>
+            <p id="modalBody">Conteúdo explicativo aqui...</p>
+        </div>
+    </div>
+
+    <!-- Lógica JavaScript -->
+    <script>
+        // Função para alternar entre as abas da linha do tempo
+        function openStep(evt, stepId) {
+            let contents = document.getElementsByClassName("step-content");
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].className = contents[i].className.replace(" active", "");
+            }
+
+            let buttons = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].className = buttons[i].className.replace(" active", "");
+            }
+
+            document.getElementById(stepId).className += " active";
+            evt.currentTarget.className += " active";
+        }
+
+        // Funções para controlar o Pop-up interativo
+        function showPopup(title, text) {
+            document.getElementById("modalTitle").innerHTML = title;
+            document.getElementById("modalBody").innerHTML = text;
+            document.getElementById("infoModal").style.display = "flex";
+        }
+
+        function closePopup() {
+            document.getElementById("infoModal").style.display = "none";
+        }
+
+        // Fecha o pop-up se o usuário clicar fora dele
+        window.onclick = function(event) {
+            let modal = document.getElementById("infoModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

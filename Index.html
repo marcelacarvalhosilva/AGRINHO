@@ -1,129 +1,260 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agro forte, futuro sustentável - equilíbrio entre produção e meio ambiente</title>
-    <style>
-        /* Estilização Geral */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f9f4; color: #333; padding: 20px; }
-        header { text-align: center; margin-bottom: 30px; background-color: #959989e8; color: rgb(21, 21, 21); padding: 30px; border-radius: 10px; }
-        h1 { margin-bottom: 10px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroCalc Pro</title>
 
-        /* Navegação por Abas (Linha do Tempo) */
-        .timeline-nav { display: flex; justify-content: space-around; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .tab-btn { background: #e0e0e0; border: none; padding: 12px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .tab-btn.active { background: #8fac8f; color: #1b5e20; transform: scale(1.05); }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
 
-        /* Conteúdo das Etapas */
-        .step-content { display: none; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
-        .step-content.active { display: block; animation: fadeIn 0.5s ease; }AGRINHO
-        .step-img { font-size: 80px; margin: 20px 0; display: block; }
+body{
+    background:#f4f7f4;
+}
 
-        /* Elementos Interativos (Botões de Curiosidade) */
-        .interactive-btn { background: #ffb300; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; margin-top: 15px; transition: 0.2s; }
-        .interactive-btn:hover { background: #ffa000; transform: translateY(-2px); }
+header{
+    background:linear-gradient(135deg,#1b5e20,#4caf50);
+    color:white;
+    text-align:center;
+    padding:25px;
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
 
-        /* Janela Pop-up (Modal) */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 10; }
-        .modal-content { background: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; text-align: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; color: #666; }
-        .close-btn:hover { color: #000; }
+.container{
+    max-width:900px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 4px 20px rgba(0,0,0,.1);
+}
 
-        /* Animação simples */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+label{
+    font-weight:600;
+    color:#333;
+}
+
+input, select{
+    width:100%;
+    padding:12px;
+    margin-top:6px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+button{
+    width:100%;
+    margin-top:25px;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#2e7d32;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1b5e20;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    margin-top:30px;
+}
+
+.card{
+    background:#f8f8f8;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    border-left:5px solid #2e7d32;
+}
+
+.card h3{
+    color:#555;
+    font-size:15px;
+}
+
+.card p{
+    margin-top:10px;
+    font-size:22px;
+    font-weight:bold;
+    color:#1b5e20;
+}
+
+.barra{
+    width:100%;
+    background:#ddd;
+    border-radius:20px;
+    margin-top:25px;
+    overflow:hidden;
+}
+
+.progresso{
+    height:25px;
+    width:0%;
+    background:linear-gradient(90deg,#43a047,#81c784);
+    text-align:center;
+    color:white;
+    line-height:25px;
+    transition:1s;
+}
+
+footer{
+    text-align:center;
+    margin:20px;
+    color:#666;
+}
+
+@media(max-width:700px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <header>
-        <h1>Agro forte, futuro sustentável</h1>
-        <p>equilíbrio entre produção e meio ambiente</p>
-    </header>
+<header>
+    <h1>🌾 AgroCalc Pro</h1>
+    <p>Calculadora Inteligente de Safras</p>
+</header>
 
-    <!-- Linha do Tempo (Abas) -->
-    <nav class="timeline-nav">
-        <button class="tab-btn active" onclick="openStep(event, 'etapa1')">1. O Plantio</button>
-        <button class="tab-btn" onclick="openStep(event, 'etapa2')">2. O Cuidado</button>
-        <button class="tab-btn" onclick="openStep(event, 'etapa3')">3. A Colheita</button>
-        <button class="tab-btn" onclick="openStep(event, 'etapa4')">4. O Consumo</button>
-    </nav>
+<div class="container">
 
-    <!-- Conteúdos de cada Etapa -->
-    <section id="etapa1" class="step-content active">
-        <h2>Etapa 1: Preparo do Solo e Plantio</h2>
-        <img src="https://biotrigo.com.br/wp-content/uploads/img/202004031136391239383085_g.jpg" alt="Texto Alternativo" width="500">
-        <p>O sucesso da produção agrícola depende de um solo bem preparado, com boa fertilidade e drenagem, e de um plantio feito no momento certo, com sementes de qualidade e manejo adequado. Cada etapa aumenta a chance de plantas mais saudáveis e maior produtividade. .</p>
-        <button class="interactive-btn" onclick="showPopup('Curiosidade do Campo', 'Você sabia? O plantio direto evita que o trator passe muitas vezes na terra, economizando combustível e reduzindo a emissão de CO₂ na atmosfera!')">Clique no Trator 🚜</button>
-    </section>
+<div class="grid">
 
-    <section id="etapa2" class="step-content">
-        <h2>Etapa 2: Manejo Orgânico e Sustentável</h2>
-        <img src="https://www.terradecultivo.com.br/wp-content/uploads/2021/06/praticas-sustentaveis-1-1024x576.jpg" alt="Texto Alternativo" width="500">
-        <p>O milho cresce forte usando tecnologia de ponta. Em vez de venenos químicos agressivos, o produtor usa o manejo biológico, usando insetos do bem para combater as pragas.</p>
-        <button class="interactive-btn" onclick="showPopup('Segredo da Água', 'Os produtores modernos usam sensores conectados à internet para saber a quantidade exata de água que a planta precisa. Assim, nenhuma gota de chuva ou irrigação é desperdiçada!')">Clique na Nuvem ☁️</button>
-    </section>
+<div>
+<label>Cultura</label>
+<select id="cultura">
+<option>Soja</option>
+<option>Milho</option>
+<option>Trigo</option>
+<option>Café</option>
+</select>
+</div>
 
-    <section id="etapa3" class="step-content">
-        <h2>Etapa 3: Colheita e Agroindústria</h2>
-        <img src="https://blog.syngentadigital.ag/wp-content/uploads/2022/02/masey-ferguson4707-1-1600x900.jpg" alt="Texto Alternativo" width="500">
-        <p>Na hora certa, colheitadeiras modernas recolhem os grãos. O milho vai para as cooperativas e indústrias locais, gerando empregos e movimentando a economia da nossa região.</p>
-        <button class="interactive-btn" onclick="showPopup('Da Fábrica para a Região', 'As indústrias modernas usam até o bagaço e o sabugo do milho para gerar biomassa (energia limpa) para as próprias máquinas funcionarem!')">Clique na Indústria 🏭</button>
-    </section>
+<div>
+<label>Área Plantada (ha)</label>
+<input type="number" id="area">
+</div>
 
-    <section id="etapa4" class="step-content">
-        <h2>Etapa 4: Alimento na Mesa</h2>
-        <span class="step-img">https://pixabay.com/pt/images/download/we-o_rd35iyrtdwqxjcece-plate-8278884_1920.jpg</span>
-        <p>O milho se transforma em bolo, pamonha, pipoca, floco de milho e alimenta animais. Graças ao trabalho do campo, a cidade tem comida saudável e de qualidade todos os dias.</p>
-        <button class="interactive-btn" onclick="showPopup('Quiz Rápido!', 'Qual desses pratos típicos NÃO é feito de milho? <br><br> 🌽 A) Pamonha <br> 🌽 B) Polenta <br> 🍫 C) Chocolate <br><br> <i>Resposta certa: C! O milho está em quase tudo, mas o chocolate vem do cacau!</i>')">Abrir Quiz 📝</button>
-    </section>
+<div>
+<label>Produtividade (sacas/ha)</label>
+<input type="number" id="produtividade">
+</div>
 
-    <!-- Estrutura do Pop-up (Modal) -->
-    <div id="infoModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closePopup()">&times;</span>
-            <h3 id="modalTitle" style="color: #a4b1a5; margin-bottom: 15px;">Título</h3>
-            <p id="modalBody">Conteúdo explicativo aqui...</p>
-        </div>
-    </div>
+<div>
+<label>Preço da Saca (R$)</label>
+<input type="number" id="preco">
+</div>
 
-    <!-- Lógica JavaScript -->
-    <script>
-        // Função para alternar entre as abas da linha do tempo
-        function openStep(evt, stepId) {
-            let contents = document.getElementsByClassName("step-content");
-            for (let i = 0; i < contents.length; i++) {
-                contents[i].className = contents[i].className.replace(" active", "");
-            }
+<div>
+<label>Custo por Hectare (R$)</label>
+<input type="number" id="custo">
+</div>
 
-            let buttons = document.getElementsByClassName("tab-btn");
-            for (let i = 0; i < buttons.length; i++) {
-                buttons[i].className = buttons[i].className.replace(" active", "");
-            }
+</div>
 
-            document.getElementById(stepId).className += " active";
-            evt.currentTarget.className += " active";
-        }
+<button onclick="calcularSafra()">
+Calcular Resultados
+</button>
 
-        // Funções para controlar o Pop-up interativo
-        function showPopup(title, text) {
-            document.getElementById("modalTitle").innerHTML = title;
-            document.getElementById("modalBody").innerHTML = text;
-            document.getElementById("infoModal").style.display = "flex";
-        }
+<div class="cards">
 
-        function closePopup() {
-            document.getElementById("infoModal").style.display = "none";
-        }
+<div class="card">
+<h3>Produção Total</h3>
+<p id="producao">0</p>
+</div>
 
-        // Fecha o pop-up se o usuário clicar fora dele
-        window.onclick = function(event) {
-            let modal = document.getElementById("infoModal");
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
+<div class="card">
+<h3>Receita Bruta</h3>
+<p id="receita">R$ 0</p>
+</div>
+
+<div class="card">
+<h3>Custo Total</h3>
+<p id="custototal">R$ 0</p>
+</div>
+
+<div class="card">
+<h3>Lucro Líquido</h3>
+<p id="lucro">R$ 0</p>
+</div>
+
+</div>
+
+<h3 style="margin-top:25px;">Rentabilidade</h3>
+
+<div class="barra">
+<div class="progresso" id="rentabilidade">
+0%
+</div>
+</div>
+
+</div>
+
+<footer>
+AgroCalc Pro © 2026
+</footer>
+
+<script>
+
+function calcularSafra(){
+
+let area = Number(document.getElementById("area").value);
+let produtividade = Number(document.getElementById("produtividade").value);
+let preco = Number(document.getElementById("preco").value);
+let custo = Number(document.getElementById("custo").value);
+
+if(area <=0 || produtividade <=0 || preco <=0 || custo <0){
+    alert("Preencha os dados corretamente.");
+    return;
+}
+
+let producao = area * produtividade;
+let receita = producao * preco;
+let custoTotal = area * custo;
+let lucro = receita - custoTotal;
+
+let rentabilidade = (lucro / receita) * 100;
+
+document.getElementById("producao").innerHTML =
+producao.toLocaleString('pt-BR') + " sacas";
+
+document.getElementById("receita").innerHTML =
+"R$ " + receita.toLocaleString('pt-BR');
+
+document.getElementById("custototal").innerHTML =
+"R$ " + custoTotal.toLocaleString('pt-BR');
+
+document.getElementById("lucro").innerHTML =
+"R$ " + lucro.toLocaleString('pt-BR');
+
+document.getElementById("rentabilidade").style.width =
+Math.min(rentabilidade,100) + "%";
+
+document.getElementById("rentabilidade").innerHTML =
+rentabilidade.toFixed(1) + "%";
+
+}
+
+</script>
+
 </body>
 </html>
